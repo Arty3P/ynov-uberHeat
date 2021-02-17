@@ -1,0 +1,5 @@
+version: "3"
+services:
+  php:
+    environment:
+      XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=25555

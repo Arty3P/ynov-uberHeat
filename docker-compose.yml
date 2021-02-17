@@ -1,0 +1,43 @@
+version: "3"
+services:
+  php:
+    container_name: uber_heat_php
+    build: build/php
+    env_file:
+      - ./.env.local
+    expose:
+      - "9000"
+    depends_on:
+      - db
+    volumes:
+      - ./:/var/www/html/symfony
+      - ./logs:/var/log
+  nginx:
+    container_name: uber_heat_web
+    build: build/nginx
+    ports:
+      - "8500:80"
+    env_file:
+      - ./.env.local
+    depends_on:
+      - php
+      - db
+    volumes:
+      - ./public:/var/www/html/symfony/public
+      - ./logs:/var/log/nginx
+  db:
+    container_name: uber_heat_db
+    image: mysql:latest
+    env_file:
+      - ./.env.local
+    ports:
+      - "8505:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+  pma:
+    container_name: uber_heat_pma
+    image: phpmyadmin:latest
+    ports:
+      - "8510:80"
+    links:
+      - db
