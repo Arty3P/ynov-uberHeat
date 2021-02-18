@@ -2,13 +2,21 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ProductConfigurationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=ProductConfigurationRepository::class)
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({
+ *   "rect" = "RectProductConfiguration",
+ *   "circ" = "CircProductConfiguration"
+ * })
  */
-class ProductConfiguration
+abstract class ProductConfiguration
 {
     /**
      * @ORM\Id

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource()
  * @ORM\Entity(repositoryClass=CircProductConfigurationRepository::class)
  */
-class CircProductConfiguration
+class CircProductConfiguration extends ProductConfiguration
 {
     /**
      * @ORM\Id
@@ -23,6 +23,13 @@ class CircProductConfiguration
      * @ORM\Column(type="float")
      */
     private $diameter;
+
+    public function getSurface()
+    {
+        $radius = $this->diameter / 2;
+
+        return M_PI * ($radius ** 2);
+    }
 
     public function getId(): ?int
     {
