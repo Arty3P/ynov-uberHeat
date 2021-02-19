@@ -12,6 +12,11 @@ use League\Csv\Statement;
 
 class ProductServices
 {
+    static function checkExtensionFile($file) {
+        $fileName = $file->getClientOriginalName();
+        return pathinfo($fileName, PATHINFO_EXTENSION);
+    }
+
     static function generateCsvFile($file): \League\Csv\TabularDataReader
     {
         $csv = Reader::createFromPath($file, 'r');
