@@ -12,7 +12,8 @@ use League\Csv\Statement;
 
 class ProductServices
 {
-    static function checkExtensionFile($file) {
+    static function checkExtensionFile($file)
+    {
         $fileName = $file->getClientOriginalName();
         return pathinfo($fileName, PATHINFO_EXTENSION);
     }

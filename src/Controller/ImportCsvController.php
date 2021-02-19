@@ -32,13 +32,14 @@ class ImportCsvController extends AbstractController
                         $product = ProductServices::createProduct($record);
                         $entityManager->persist($product);
                         $entityManager->flush();
-                        $productInBdd = $productRepository->findBy(["name" => $product->getName()]);
-                        if (!$productInBdd) {
-                            $entityManager->persist($product);
-                            $entityManager->flush();
-                        } else {
-                            dump("NON");
-                        }
+                        // TODO : check duplicates
+//                        $productInBdd = $productRepository->findBy(["name" => $product->getName()]);
+//                        if (!$productInBdd) {
+//                            $entityManager->persist($product);
+//                            $entityManager->flush();
+//                        } else {
+//                            dump("NON");
+//                        }
                     } else {
                         dump("Nombre de colonnes incorrect :(");
                     }
