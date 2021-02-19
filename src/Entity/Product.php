@@ -32,7 +32,7 @@ class Product
     private $basePrice;
 
     /**
-     * @ORM\OneToMany(targetEntity=ProductConfiguration::class, mappedBy="product", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=ProductConfiguration::class, mappedBy="product", orphanRemoval=true, cascade="persist")
      */
     private $configurations;
 

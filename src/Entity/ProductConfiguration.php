@@ -23,38 +23,38 @@ abstract class ProductConfiguration
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="configurations")
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="configurations", cascade="persist")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $product;
+    protected $product;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $depth;
+    protected $depth;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $dB1;
+    protected $dB1;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $dB2;
+    protected $dB2;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $dB5;
+    protected $dB5;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $dB10;
+    protected $dB10;
 
     public function getId(): ?int
     {
