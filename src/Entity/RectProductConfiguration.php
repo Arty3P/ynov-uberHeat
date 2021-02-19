@@ -17,22 +17,22 @@ class RectProductConfiguration extends ProductConfiguration
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $width;
+    protected $width;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $height;
+    protected $height;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $thickness;
+    protected $thickness;
 
     public function getSurface(): float
     {
