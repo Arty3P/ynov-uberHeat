@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Repository\ProductRepository;
 use App\Services\ProductServices;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,32 +23,33 @@ class ImportCsvController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $products = $request->files->get('products');
-        $fileType = $products->getClientMimeType();
-        if($products && $fileType === "text/csv") {
-            $records = ProductServices::generateCsvFile($products);
-            foreach ($records as $record) {
-                if(ProductServices::checkColumnsNumber(count($record))) {
-                    $product = ProductServices::createProduct($record);
-                    $entityManager->persist($product);
-                    $entityManager->flush();
-                    /*$productInBdd = $productRepository->findBy(["name" => $product->getName()]);*/
-                    /*if(!$productInBdd) {
-                        dump("OK");
+        if ($products) {
+            $extensionFile = ProductServices::checkExtensionFile($products);
+            if ($extensionFile === "csv") {
+                $records = ProductServices::generateCsvFile($products);
+                foreach ($records as $record) {
+                    if (ProductServices::checkColumnsNumber(count($record))) {
+                        $product = ProductServices::createProduct($record);
                         $entityManager->persist($product);
                         $entityManager->flush();
+                        // TODO : check duplicates
+//                        $productInBdd = $productRepository->findBy(["name" => $product->getName()]);
+//                        if (!$productInBdd) {
+//                            $entityManager->persist($product);
+//                            $entityManager->flush();
+//                        } else {
+//                            dump("NON");
+//                        }
                     } else {
-                        dump("NON");
-                    }*/
+                        dump("Nombre de colonnes incorrect :(");
+                    }
                 }
-                else {
-                    dump("Nombre de colonnes incorrect :(");
-                }
+            } else {
+                dump("Merci d'envoyer un fichier au format csv, et non : " . $extensionFile);
             }
-        } else if(!$products) {
-            dump("Merci d'envoyer un fichier ^^");
-        } else {
+        }
+        else {
             dump("Format de fichier incorrect :(");
-            dump("Format envoyé : " . $fileType);
         }
 
         return $this->render('import_csv/index.html.twig', [
