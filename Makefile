@@ -4,7 +4,7 @@ endef
 
 PROJECT_NAME=UberHeat
 
-app.init: docker.down docker.up app.composer.install app.db generate-keypair
+app.init: docker.down docker.up app.composer.install app.db generate-keypair-prod
 
 app.permissions:
 	docker-compose -p $(PROJECT_NAME) exec -uroot php chown -R www-data:www-data /app/var || true
