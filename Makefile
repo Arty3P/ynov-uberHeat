@@ -1,7 +1,6 @@
 PROJECT_NAME=UberHeat
 
-app.init: docker.down docker.up app.composer.install
-	composer install
+app.init: docker.down docker.up app.composer.install app.db
 
 app.permissions:
 	docker-compose -p $(PROJECT_NAME) exec -uroot php chown -R www-data:www-data /app/var || true
@@ -21,3 +20,6 @@ docker.run:
 
 docker.down:
 	docker-compose -p $(PROJECT_NAME) down -v
+
+app.db:
+	docker-compose -p $(PROJECT_NAME) exec php php bin/console doctrine:database:create
